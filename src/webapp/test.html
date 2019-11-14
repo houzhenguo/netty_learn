@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket客户端</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    var socket;
+    if (window.WebSocket) {
+        socket = new WebSocket("ws://localhost:8899/ws");
+        // 服务器发回，这个方法会被调用
+        socket.onmessage = function (ev) {
+            var ta = document.getElementById("responseText");
+            ta.value = ta.value +"\n" + ev.data;
+        }
+
+        // 链接打开
+        socket.open = function (ev) {
+            var ta = document.getElementById("responseText");
+            ta.value = ta.value +"\n" + ev.data;
+        }
+
+        // 链接断掉
+        socket.onclose = function (ev) {
+            var ta = document.getElementById("responseText");
+            ta.value = ta.value +"\n" + ev.data;
+        }
+
+
+    }else {
+        alert("浏览器不支持WebSocket")
+    }
+
+    // send msg
+    function send(msg) {
+        if (!window.WebSocket) {
+            return;
+        }
+        if(socket.readyState == WebSocket.OPEN) {
+            socket.send(msg);
+        }else {
+            alert("链接尚未开启");
+        }
+    }
+
+</script>
+
+<form onsubmit="return false">
+    <textarea name="message" style="width: 400px;height: 200px">
+
+    </textarea>
+    <input type="button" value="发送数据" onclick="send(this.form.message.value)">
+
+    <h3>服务端输出：</h3>
+    <textarea name="responseText" style="width: 400px;height: 200px">
+
+    </textarea>
+
+    <input type="button" onclick="javascript:document.getElementById('responseText').value=''" value="清空内容">
+
+</form>
+</body>
+</html>
