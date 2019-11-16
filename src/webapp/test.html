@@ -6,13 +6,15 @@
 </head>
 <body>
 
-<script type="text/javascript">
+<script type="text/javascript" defer=true>
     var socket;
     if (window.WebSocket) {
         socket = new WebSocket("ws://localhost:8899/ws");
         // 服务器发回，这个方法会被调用
         socket.onmessage = function (ev) {
+            alert(ev.data); // 这里可以alert出服务器时间
             var ta = document.getElementById("responseText");
+            alert(ta);
             ta.value = ta.value +"\n" + ev.data;
         }
 

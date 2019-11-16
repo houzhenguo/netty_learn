@@ -11,6 +11,10 @@ import io.netty.handler.logging.LoggingHandler;
 
 import java.net.InetSocketAddress;
 
+/**
+ *  client 测试文件在 src/webapp/test.html
+ */
+
 public class MyServer {
     public static void main(String[] args) throws Exception{
         EventLoopGroup bossGroup = new NioEventLoopGroup();
